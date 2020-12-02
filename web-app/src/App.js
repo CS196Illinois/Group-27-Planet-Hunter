@@ -5,12 +5,17 @@ import './App.css';
 function App() {
 
   const [currentTime, setCurrentTime] = useState(0);
+  const [values, setValues] = useState([]);
 
   useEffect(() => {
     fetch("/time").then(res => res.json()).then(data => {
       setCurrentTime(data.time);
     })
-  },[])
+
+    fetch("/light-flux-values").then(res => res.json()).then(data => {
+      setValues(data.values);
+    })
+  }, [])
 
 
   return (
@@ -29,6 +34,10 @@ function App() {
           Learn React
         </a>
         <p>The current time is {currentTime}.</p>
+        <br />
+        {values.map(val => (
+            <p>{val}</p>
+        ))}
       </header>
     </div>
   );

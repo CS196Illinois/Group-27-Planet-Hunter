@@ -1,16 +1,21 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+*.pyc
 /node_modules
 /.pnp
 .pnp.js
 venv
 
 # testing
-/coverage
+/coverage 
 
 # production
 /build
+
+#flask
+web-app
+.eslintcache
 
 # misc
 .DS_Store
