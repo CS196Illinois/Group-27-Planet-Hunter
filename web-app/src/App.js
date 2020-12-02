@@ -4,41 +4,45 @@ import './App.css';
 
 function App() {
 
-  const [currentTime, setCurrentTime] = useState(0);
   const [values, setValues] = useState([]);
+  const [isPlanet, setIsPlanet] = useState();
 
+  // gets light light values
   useEffect(() => {
-    fetch("/time").then(res => res.json()).then(data => {
-      setCurrentTime(data.time);
-    })
-
     fetch("/light-flux-values").then(res => res.json()).then(data => {
       setValues(data.values);
     })
+
   }, [])
 
+  // waits until values have been received and then makes the model call to figure out if those values are a planet
+  useEffect(() => {
+    fetch('/model', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({ flux_values: values })
+    }).then(res => res.json()).then(data => {
+      setIsPlanet(data.value[0]);
+    });
+  }, [values])
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <p>The current time is {currentTime}.</p>
-        <br />
+
+      <div style={{ display: "flex", overflowX: "clip" }}>
+        {`This is the post request response: ${isPlanet}`}
+      </div>
+      <div>
+        <br /><br /><br /><br /><br />
         {values.map(val => (
-            <p>{val}</p>
+          <span>{`${val}                             `}</span>
         ))}
-      </header>
+      </div>
+
+
     </div>
   );
 }
