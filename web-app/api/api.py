@@ -13,7 +13,6 @@ def get_current_time():
 
 @app.route('/light-flux-values')
 def get_light_flux_values():
-
     return {'values': [random.randint(-5000, 5000) for i in range(1598)]}
 
 @app.route('/model', methods=['POST'])

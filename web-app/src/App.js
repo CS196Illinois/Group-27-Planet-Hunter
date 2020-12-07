@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+// import ZingChart from 'zingchart-react';
+import { AppBar } from '@material-ui/core'
 
 function App() {
 
   const [values, setValues] = useState([]);
   const [isPlanet, setIsPlanet] = useState();
+
+  const state = {
+    config: {
+      type: 'bar',
+      series: [{
+        values: [4,5,3,4,5,3,5,4,11]
+      }]
+    }
+  }
 
   // gets light light values
   useEffect(() => {
